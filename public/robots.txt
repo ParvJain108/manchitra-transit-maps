@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://parvjain108.github.io/manchitra-transit-maps/sitemap-index.xml
