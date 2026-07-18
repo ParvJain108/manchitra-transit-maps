@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital@1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;600;700;800&family=Overpass:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital@1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* Blueprint / cyanotype palette — grounded in survey-map & transit-diagram conventions */
@@ -14,7 +14,7 @@
   --line-charts: #2e8b84;     /* Charts */
   --line-family: #8b6bae;     /* Family Trees */
 
-  --font-display: 'Overpass', system-ui, sans-serif;
+  --font-display: 'Google Sans Flex', system-ui, sans-serif;
   --font-body: 'IBM Plex Sans', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
