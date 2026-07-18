@@ -5,7 +5,7 @@ pubDate: 2026-06-14
 category: transit
 
 ---
-![Schematic transit map of Indore showing railway and metro routes](/manchitra-transit-maps/images/Indore-Transit-Map.png)
+![Schematic transit map of Indore showing railway and metro routes](/manchitra-transit-maps/images/Indore-transit-map.png)
 
 This is a sample post — replace it with your own writeup once the site is live.
 
