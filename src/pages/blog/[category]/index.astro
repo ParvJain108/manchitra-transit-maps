@@ -1,0 +1,46 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import LineNav from '../../../components/LineNav.astro';
+import DeparturesBoard from '../../../components/DeparturesBoard.astro';
+import { getCollection } from 'astro:content';
+import { CATEGORIES, type CategoryKey } from '../../../lib/categories';
+
+export async function getStaticPaths() {
+  return (Object.keys(CATEGORIES) as CategoryKey[]).map((category) => ({
+    params: { category },
+  }));
+}
+
+const { category } = Astro.params as { category: CategoryKey };
+const meta = CATEGORIES[category];
+const posts = await getCollection('blog', ({ data }) => data.category === category && !data.draft);
+---
+
+<Layout title={meta.label}>
+  <header class="hero">
+    <div class="wrap">
+      <LineNav current={category} />
+      <p class={`badge ${meta.badgeClass} line-label`}>Line {meta.code} — {meta.label}</p>
+      <h1>{meta.label}</h1>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <DeparturesBoard posts={posts} />
+  </main>
+</Layout>
+
+<style define:vars={{ lineColor: meta.color }}>
+  .hero {
+    padding: 40px 0 24px;
+  }
+
+  .line-label {
+    margin: 28px 0 12px;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    margin: 0 0 8px;
+  }
+</style>

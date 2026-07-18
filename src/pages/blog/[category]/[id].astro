@@ -1,0 +1,101 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import LineNav from '../../../components/LineNav.astro';
+import { getCollection, render } from 'astro:content';
+import { CATEGORIES } from '../../../lib/categories';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { category: post.data.category, id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const meta = CATEGORIES[post.data.category];
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description}>
+  <header class="hero">
+    <div class="wrap">
+      <LineNav current={post.data.category} />
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="post">
+      <p class={`badge ${meta.badgeClass}`}>{meta.label}</p>
+      <h1>{post.data.title}</h1>
+      <p class="post-date">
+        {post.data.pubDate.toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' })}
+      </p>
+      <div class="prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .hero {
+    padding: 40px 0 8px;
+  }
+
+  .post {
+    max-width: 68ch;
+    margin: 24px 0 80px;
+    background: var(--paper);
+    color: var(--ink-blueprint-deep);
+    border-radius: 12px;
+    padding: clamp(24px, 5vw, 56px);
+  }
+
+  .post h1 {
+    color: var(--ink-blueprint-deep);
+    font-size: clamp(1.8rem, 4.5vw, 2.4rem);
+    margin: 16px 0 8px;
+  }
+
+  .post-date {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: #5a6478;
+    margin: 0 0 32px;
+  }
+
+  .prose {
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    margin-top: 2em;
+    color: var(--ink-blueprint-deep);
+  }
+
+  .prose :global(a) {
+    color: var(--ink-blueprint);
+  }
+
+  .prose :global(img) {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    background: rgba(16, 35, 63, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--ink-blueprint);
+    margin: 1.5em 0;
+    padding-left: 1em;
+    color: #444d5e;
+  }
+</style>

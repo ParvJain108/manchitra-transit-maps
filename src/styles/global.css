@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital@1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* Blueprint / cyanotype palette — grounded in survey-map & transit-diagram conventions */
+  --ink-blueprint: #10233f;   /* base background, deep cyanotype blue */
+  --ink-blueprint-deep: #0a1830; /* darker panel/footer */
+  --paper: #ede7d9;           /* warm survey-paper white, used for text & cards */
+  --paper-dim: #b9c3d6;       /* dimmed paper tone for secondary text on blueprint */
+  --grid-line: rgba(237, 231, 217, 0.08);
+
+  /* Line colors = content category system, styled like real metro line codes */
+  --line-transit: #f2a900;    /* Transit Maps */
+  --line-infra: #c1442d;      /* Infra Updates */
+  --line-charts: #2e8b84;     /* Charts */
+  --line-family: #8b6bae;     /* Family Trees */
+
+  --font-display: 'Overpass', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --radius-station: 999px;
+  --max-width: 880px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background-color: var(--ink-blueprint);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--line-transit);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--paper);
+}
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+.site-footer {
+  border-top: 1px solid var(--grid-line);
+  margin-top: 80px;
+  padding: 32px 0 48px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--paper-dim);
+}
+
+.site-footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Station badge — used for category tags across the site */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  padding: 4px 12px 4px 8px;
+  border-radius: var(--radius-station);
+  border: 1.5px solid currentColor;
+  white-space: nowrap;
+}
+
+.badge::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.badge-transit { color: var(--line-transit); }
+.badge-infra { color: var(--line-infra); }
+.badge-charts { color: var(--line-charts); }
+.badge-family { color: var(--line-family); }

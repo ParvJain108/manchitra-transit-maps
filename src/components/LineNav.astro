@@ -1,0 +1,111 @@
+---
+import { CATEGORIES, type CategoryKey } from '../lib/categories';
+
+interface Props {
+  current?: CategoryKey;
+}
+
+const { current } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const stops = Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[CategoryKey]][];
+---
+
+<nav class="line-nav" aria-label="Site sections">
+  <ol class="line-track">
+    <li class="stop stop-origin">
+      <a href={base}>Manchitra</a>
+    </li>
+    {stops.map(([key, meta]) => (
+      <li class="stop" style={`--stop-color: ${meta.color}`}>
+        <a
+          href={`${base}blog/${key}/`}
+          aria-current={current === key ? 'page' : undefined}
+        >
+          {meta.label}
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .line-nav {
+    padding: 4px 0;
+  }
+
+  .line-track {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 4px;
+    margin: 0;
+    overflow-x: auto;
+    gap: 0;
+    scrollbar-width: thin;
+  }
+
+  .stop {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .stop:not(:first-child)::before {
+    content: '';
+    width: 40px;
+    height: 3px;
+    background: var(--paper-dim);
+    opacity: 0.35;
+    margin: 0 2px;
+  }
+
+  .stop a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: var(--radius-station);
+    border: 2px solid var(--stop-color, var(--paper));
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink-blueprint);
+    white-space: nowrap;
+    transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .stop a::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--stop-color, var(--paper));
+    flex-shrink: 0;
+  }
+
+  .stop a:hover {
+    transform: translateY(-1px);
+  }
+
+  .stop a:hover,
+  .stop a[aria-current='page'] {
+    background: var(--stop-color, var(--paper));
+    color: var(--ink-blueprint-deep);
+  }
+
+  .stop-origin a {
+    border-style: dashed;
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 1rem;
+  }
+
+  .stop-origin a::before {
+    display: none;
+  }
+</style>
