@@ -1,9 +1,11 @@
 ---
-title: "Kanpur Metro: Reading the Corridor Map"
-description: "A breakdown of the Kanpur Metro's IIT–Naubasta corridor and how its stations were sequenced."
+title: "Indore Metro: Reading the Corridor Map"
+description: "Blank"
 pubDate: 2026-06-14
 category: transit
+
 ---
+![Schematic transit map of Indore showing railway and metro routes](/manchitra-transit-maps/images/indore-transit-map.png)
 
 This is a sample post — replace it with your own writeup once the site is live.
 
