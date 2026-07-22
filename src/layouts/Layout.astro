@@ -1,18 +1,24 @@
 ---
 import '../styles/global.css';
+import LineNav from '../components/LineNav.astro';
+import type { CategoryKey } from '../lib/categories';
 
 interface Props {
   title: string;
   description?: string;
+  current?: CategoryKey;
 }
 
-const { title, description = 'Transit maps, infra updates, and charts, hand-drawn and hand-coded.' } = Astro.props;
+const {
+  title,
+  description = 'Transit maps, infra updates, and charts, hand-drawn and hand-coded.',
+  current,
+} = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta name="google-site-verification" content="iWVR4Hqw9fgZXGb-CYdBPROylmJHxaIxkKim90f3iP0" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
@@ -22,6 +28,7 @@ const { title, description = 'Transit maps, infra updates, and charts, hand-draw
     <title>{title} · Manchitra Transit Maps</title>
   </head>
   <body>
+    <LineNav current={current} />
     <slot />
     <footer class="site-footer">
       <div class="wrap">

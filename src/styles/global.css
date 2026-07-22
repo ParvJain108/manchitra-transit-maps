@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;600;700;800&family=Overpass:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital@1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:ital@1&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* Blueprint / cyanotype palette — grounded in survey-map & transit-diagram conventions */
-  --ink-blueprint: #000000;   /* base background, deep cyanotype blue */
-  --ink-blueprint-deep: #2a2a2a; /* darker panel/footer */
+  --ink-blueprint: #10233f;   /* base background, deep cyanotype blue */
+  --ink-blueprint-deep: #0a1830; /* darker panel/footer */
   --paper: #ede7d9;           /* warm survey-paper white, used for text & cards */
   --paper-dim: #b9c3d6;       /* dimmed paper tone for secondary text on blueprint */
-
+  --grid-line: rgba(237, 231, 217, 0.08);
 
   /* Line colors = content category system, styled like real metro line codes */
   --line-transit: #f2a900;    /* Transit Maps */
@@ -14,12 +14,12 @@
   --line-charts: #2e8b84;     /* Charts */
   --line-family: #8b6bae;     /* Family Trees */
 
-  --font-display: 'Google Sans Flex', system-ui, sans-serif;
-  --font-body: 'Google Sans Flex', system-ui, sans-serif;
+  --font-display: 'Overpass', system-ui, sans-serif;
+  --font-body: 'IBM Plex Sans', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 
   --radius-station: 999px;
-  --max-width: 880px;
+  --max-width: 1080px;
 }
 
 * { box-sizing: border-box; }
@@ -68,7 +68,7 @@ h1, h2, h3 {
 .wrap {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 2px;
+  padding: 0 clamp(12px, 3vw, 32px);
 }
 
 .eyebrow {

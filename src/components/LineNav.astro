@@ -10,11 +10,21 @@ const base = import.meta.env.BASE_URL;
 const stops = Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[CategoryKey]][];
 ---
 
-<nav class="line-nav" aria-label="Site sections">
+<button id="line-nav-toggle" class="drawer-toggle" aria-expanded="false" aria-controls="line-nav-drawer">
+  <span class="toggle-bar"></span>
+  <span class="toggle-bar"></span>
+  <span class="toggle-bar"></span>
+  <span class="toggle-label">Lines</span>
+</button>
+
+<div id="line-nav-backdrop" class="drawer-backdrop" hidden></div>
+
+<nav id="line-nav-drawer" class="line-drawer" aria-label="Site sections" data-open="false">
+  <div class="drawer-head">
+    <a href={base} class="drawer-home">Manchitra</a>
+    <button id="line-nav-close" class="drawer-close" aria-label="Close menu">&times;</button>
+  </div>
   <ol class="line-track">
-    <li class="stop stop-origin">
-      <a href={base}>Manchitra</a>
-    </li>
     {stops.map(([key, meta]) => (
       <li class="stop" style={`--stop-color: ${meta.color}`}>
         <a
@@ -29,34 +39,98 @@ const stops = Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[Cate
 </nav>
 
 <style>
-  .line-nav {
-    padding: 4px 0;
+  .drawer-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 12px 16px;
+    background: var(--ink-blueprint);
+    border: 2px solid var(--paper-dim);
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .toggle-bar {
+    width: 22px;
+    height: 2px;
+    background: var(--paper);
+    border-radius: 2px;
+  }
+
+  .toggle-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dim);
+    margin-top: 2px;
+  }
+
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 24, 48, 0.6);
+    z-index: 45;
+  }
+
+  .line-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: min(300px, 82vw);
+    background: var(--ink-blueprint-deep);
+    border-right: 1px solid var(--grid-line);
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  .line-drawer[data-open='true'] {
+    transform: translateX(0);
+  }
+
+  .drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .drawer-home {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: var(--paper);
+  }
+
+  .drawer-close {
+    background: none;
+    border: none;
+    color: var(--paper);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 8px;
   }
 
   .line-track {
-    display: flex;
-    align-items: center;
     list-style: none;
-    padding: 4px;
+    padding: 0;
     margin: 0;
-    overflow-x: auto;
-    gap: 0;
-    scrollbar-width: thin;
-  }
-
-  .stop {
     display: flex;
-    align-items: center;
-    flex-shrink: 0;
-  }
-
-  .stop:not(:first-child)::before {
-    content: '';
-    width: 40px;
-    height: 3px;
-    background: var(--paper-dim);
-    opacity: 0.35;
-    margin: 0 2px;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .stop a {
@@ -64,17 +138,16 @@ const stops = Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[Cate
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    padding: 10px 16px;
+    padding: 12px 16px;
     border-radius: var(--radius-station);
     border: 2px solid var(--stop-color, var(--paper));
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--paper);
     background: var(--ink-blueprint);
-    white-space: nowrap;
-    transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
 
   .stop a::before {
@@ -86,26 +159,40 @@ const stops = Object.entries(CATEGORIES) as [CategoryKey, typeof CATEGORIES[Cate
     flex-shrink: 0;
   }
 
-  .stop a:hover {
-    transform: translateY(-1px);
-  }
-
   .stop a:hover,
   .stop a[aria-current='page'] {
     background: var(--stop-color, var(--paper));
     color: var(--ink-blueprint-deep);
   }
-
-  .stop-origin a {
-    border-style: dashed;
-    font-family: var(--font-display);
-    font-weight: 800;
-    text-transform: none;
-    letter-spacing: 0;
-    font-size: 1rem;
-  }
-
-  .stop-origin a::before {
-    display: none;
-  }
 </style>
+
+<script>
+  const toggle = document.getElementById('line-nav-toggle');
+  const drawer = document.getElementById('line-nav-drawer');
+  const backdrop = document.getElementById('line-nav-backdrop');
+  const closeBtn = document.getElementById('line-nav-close');
+
+  function openDrawer() {
+    drawer?.setAttribute('data-open', 'true');
+    backdrop?.removeAttribute('hidden');
+    toggle?.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeDrawer() {
+    drawer?.setAttribute('data-open', 'false');
+    backdrop?.setAttribute('hidden', '');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = drawer?.getAttribute('data-open') === 'true';
+    isOpen ? closeDrawer() : openDrawer();
+  });
+
+  closeBtn?.addEventListener('click', closeDrawer);
+  backdrop?.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+  });
+</script>

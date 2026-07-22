@@ -1,6 +1,5 @@
 ---
 import Layout from '../../../layouts/Layout.astro';
-import LineNav from '../../../components/LineNav.astro';
 import DeparturesBoard from '../../../components/DeparturesBoard.astro';
 import { getCollection } from 'astro:content';
 import { CATEGORIES, type CategoryKey } from '../../../lib/categories';
@@ -16,10 +15,9 @@ const meta = CATEGORIES[category];
 const posts = await getCollection('blog', ({ data }) => data.category === category && !data.draft);
 ---
 
-<Layout title={meta.label}>
+<Layout title={meta.label} current={category}>
   <header class="hero">
     <div class="wrap">
-      <LineNav current={category} />
       <p class={`badge ${meta.badgeClass} line-label`}>Line {meta.code} — {meta.label}</p>
       <h1>{meta.label}</h1>
     </div>
@@ -32,11 +30,11 @@ const posts = await getCollection('blog', ({ data }) => data.category === catego
 
 <style define:vars={{ lineColor: meta.color }}>
   .hero {
-    padding: 40px 0 24px;
+    padding: 96px 0 24px;
   }
 
   .line-label {
-    margin: 28px 0 12px;
+    margin: 0 0 12px;
   }
 
   h1 {
