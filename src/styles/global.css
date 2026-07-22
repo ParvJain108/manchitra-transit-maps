@@ -6,7 +6,7 @@
   --ink-blueprint-deep: #2a2a2a; /* darker panel/footer */
   --paper: #ede7d9;           /* warm survey-paper white, used for text & cards */
   --paper-dim: #b9c3d6;       /* dimmed paper tone for secondary text on blueprint */
-  --grid-line: rgba(237, 231, 217, 0.08);
+
 
   /* Line colors = content category system, styled like real metro line codes */
   --line-transit: #f2a900;    /* Transit Maps */
@@ -81,7 +81,7 @@ h1, h2, h3 {
 
 .site-footer {
   border-top: 1px solid var(--grid-line);
-  margin-top: 20px;
+  margin-top: 80px;
   padding: 32px 0 48px;
   font-family: var(--font-mono);
   font-size: 0.85rem;
